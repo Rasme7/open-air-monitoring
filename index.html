@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Open Air Breath Quality Monitoring</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+
+        <div class="header-content">
+
+            <div>
+                <h1>🌿 Open Air Breath Quality Monitoring</h1>
+                <p>Live Monitoring Dashboard</p>
+            </div>
+
+            <div class="live-indicator">
+                <span class="live-dot"></span>
+                LIVE
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- Main Dashboard -->
+    <main class="container">
+
+        <h2 class="section-title">Current Air Quality</h2>
+
+        <div class="cards">
+
+            <!-- Air Quality -->
+            <div class="card">
+                <h3>🌫️ Air Quality</h3>
+                <p class="value" id="air">--</p>
+                <span class="unit">Raw Value</span>
+            </div>
+
+
+            <!-- Temperature -->
+            <div class="card">
+                <h3>🌡️ Temperature</h3>
+                <p class="value" id="temperature">--</p>
+                <span class="unit">°C</span>
+            </div>
+
+
+            <!-- Humidity -->
+            <div class="card">
+                <h3>💧 Humidity</h3>
+                <p class="value" id="humidity">--</p>
+                <span class="unit">%</span>
+            </div>
+
+
+            <!-- Status -->
+            <div class="card">
+                <h3>🚦 Air Status</h3>
+                <p class="status" id="status">Loading...</p>
+            </div>
+
+        </div>
+
+
+        <!-- Air Quality Chart -->
+        <div class="chart-box">
+
+            <h2>📊 Air Quality History</h2>
+
+            <canvas id="airChart"></canvas>
+
+        </div>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+
+        <p>Open Air Breath Quality Monitoring System</p>
+
+        <p id="lastUpdated">
+            Last updated: --
+        </p>
+
+    </footer>
+
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Our JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>
