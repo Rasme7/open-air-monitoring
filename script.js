@@ -34,7 +34,36 @@ async function getSensorData() {
             humidity.toFixed(1);
 
 
-        // Status
+        // ===============================
+        // AIR QUALITY LEVEL
+        // ===============================
+
+        const airLevel = document.getElementById("airLevel");
+
+        if (airQuality < 500) {
+
+            airLevel.textContent = "GOOD";
+            airLevel.style.color = "green";
+
+        }
+        else if (airQuality < 1000) {
+
+            airLevel.textContent = "MODERATE";
+            airLevel.style.color = "orange";
+
+        }
+        else {
+
+            airLevel.textContent = "POOR";
+            airLevel.style.color = "red";
+
+        }
+
+
+        // ===============================
+        // SAFE / UNSAFE STATUS
+        // ===============================
+
         const status = document.getElementById("status");
 
         if (airQuality < 1500) {
@@ -42,7 +71,8 @@ async function getSensorData() {
             status.textContent = "SAFE";
             status.style.color = "green";
 
-        } else {
+        }
+        else {
 
             status.textContent = "UNSAFE";
             status.style.color = "red";
@@ -50,18 +80,25 @@ async function getSensorData() {
         }
 
 
-        // Last updated time
+        // ===============================
+        // LAST UPDATED
+        // ===============================
+
         document.getElementById("lastUpdated").textContent =
             "Last updated: " + new Date().toLocaleTimeString();
 
+    }
 
-    } catch (error) {
+
+    catch (error) {
 
         console.log("Sensor Error:", error);
 
         document.getElementById("status").textContent =
             "Connection Error";
+
     }
+
 }
 
 
@@ -101,12 +138,15 @@ async function loadAirQualityChart() {
         const ctx = document.getElementById("airChart");
 
 
-        // If chart already exists, destroy it
+        // Destroy old chart
         if (airChart) {
+
             airChart.destroy();
+
         }
 
 
+        // Create new chart
         airChart = new Chart(ctx, {
 
             type: "line",
@@ -132,6 +172,7 @@ async function loadAirQualityChart() {
                     fill: true
 
                 }]
+
             },
 
 
@@ -201,8 +242,10 @@ async function loadAirQualityChart() {
 
         });
 
+    }
 
-    } catch (error) {
+
+    catch (error) {
 
         console.log("Chart Error:", error);
 
