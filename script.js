@@ -15,7 +15,15 @@ async function getSensorData() {
             `https://api.thingspeak.com/channels/${channelID}/feeds.json?results=1`
         );
 
+        if (!response.ok) {
+            throw new Error("ThingSpeak connection failed");
+        }
+
         const data = await response.json();
+
+        if (!data.feeds || data.feeds.length === 0) {
+            throw new Error("No sensor data available");
+        }
 
         const latest = data.feeds[0];
 
@@ -24,7 +32,10 @@ async function getSensorData() {
         const humidity = Number(latest.field3);
 
 
-        // Display readings
+        // ===============================
+        // DISPLAY READINGS
+        // ===============================
+
         document.getElementById("air").textContent = airQuality;
 
         document.getElementById("temperature").textContent =
@@ -40,16 +51,10 @@ async function getSensorData() {
 
         const airLevel = document.getElementById("airLevel");
 
-        if (airQuality < 500) {
+        if (airQuality < 1500) {
 
             airLevel.textContent = "GOOD";
             airLevel.style.color = "green";
-
-        }
-        else if (airQuality < 1000) {
-
-            airLevel.textContent = "MODERATE";
-            airLevel.style.color = "orange";
 
         }
         else {
@@ -115,8 +120,16 @@ async function loadAirQualityChart() {
             `https://api.thingspeak.com/channels/${channelID}/feeds.json?results=20`
         );
 
+        if (!response.ok) {
+            throw new Error("Chart data connection failed");
+        }
+
         const data = await response.json();
 
+
+        // ===============================
+        // CHART LABELS
+        // ===============================
 
         const labels = data.feeds.map(feed => {
 
@@ -129,6 +142,10 @@ async function loadAirQualityChart() {
 
         });
 
+
+        // ===============================
+        // AIR QUALITY VALUES
+        // ===============================
 
         const airValues = data.feeds.map(feed =>
             Number(feed.field1)
@@ -146,7 +163,10 @@ async function loadAirQualityChart() {
         }
 
 
-        // Create new chart
+        // ===============================
+        // CREATE CHART
+        // ===============================
+
         airChart = new Chart(ctx, {
 
             type: "line",
@@ -264,9 +284,10 @@ getSensorData();
 loadAirQualityChart();
 
 
-// Update readings every 15 seconds
+// ===============================
+// AUTO UPDATE EVERY 15 SECONDS
+// ===============================
+
 setInterval(getSensorData, 15000);
 
-
-// Update chart every 15 seconds
 setInterval(loadAirQualityChart, 15000);
